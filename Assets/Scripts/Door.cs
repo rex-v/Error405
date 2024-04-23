@@ -9,6 +9,8 @@ public class Door : MonoBehaviour
     public Transform player;
     public GameObject enemies;
     bool open;
+    public GameObject closedsign;
+    public GameObject passthru;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +21,10 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(enemies.transform.childCount == 0)
+        if(enemies.transform.childCount <= 1)
         {
             open = true;
+            Destroy(closedsign);
         }
         else
         {
@@ -39,7 +42,7 @@ public class Door : MonoBehaviour
                 player.TriggerGameOver();
             }
             player.transform.position = new Vector3(exitPoint.transform.position.x, exitPoint.transform.position.y - 2, 0);
-
+            passthru.SetActive(true);
         }
 
     }
