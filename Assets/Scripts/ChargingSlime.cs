@@ -8,7 +8,7 @@ public class ChargingSlime : MonoBehaviour
 {
     Transform playerT;
     private Animator anim;
-    private SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer sprite;
 
     private Rigidbody2D rb;
     Vector3 direction;
@@ -21,14 +21,16 @@ public class ChargingSlime : MonoBehaviour
     [SerializeField] float puddleCD = 0.5f;
     float puddleTimer;
 
+    bool facingRight;
+
     // Start is called before the first frame update
 
     void Start()
     {
         playerT = GameObject.FindWithTag("Player").transform;
         rb = this.GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponentInChildren<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
         dmg = GetComponent<Damageable>();
         aipath = GetComponent<Pathfinding.AIBase>();
     }
@@ -56,6 +58,8 @@ public class ChargingSlime : MonoBehaviour
             puddleTimer = 0;
         }
         puddleTimer += Time.deltaTime;
+
+
     }
 
     private void FixedUpdate()
@@ -88,11 +92,11 @@ public class ChargingSlime : MonoBehaviour
             //anim.SetFloat("Speed", Mathf.Abs(aipath.velocity));
             if (direction.x < 0f && aipath.velocity == Vector3.zero)
             {
-                sprite.flipX = true;
+                sprite.flipX = false;
             }
             else if (direction.x >= 0f && aipath.velocity == Vector3.zero)
             {
-                sprite.flipX = false;
+                sprite.flipX = true;
             }
         }
 
